@@ -1,4 +1,4 @@
-# Localpwd
+# Local Password Manager
 
 This is a simple and secure command-line password manager written in Python.  
 It is designed for secure credential management via encrypted local storage and is completely offline.
@@ -47,10 +47,9 @@ python main.py
 ---
 ## 📁 Project Structure
 ```bash
-Copia
-Modifica
+
 Localpwd/
-├── core/              # Logica dell'applicazione
+├── src/              # Logica dell'applicazione
 │   └── ...
 ├── data/              # Vault criptato
 ├── utils/             # Funzioni di supporto
@@ -67,6 +66,8 @@ Localpwd/
 - Built-in password generator
 
 - Encrypted activity logging
+
+---
 
 ### 👨‍💻 Author
 ***Francesco Panarese***
