@@ -49,17 +49,17 @@ python main.py
 ```bash
 
 Localpwd/
-├── src/              # Logica dell'applicazione
+├── src/              # App logic
 │   └── ...
-├── data/              # Vault criptato
-├── utils/             # Funzioni di supporto
+├── data/              # Encrypted vault 
+├── utils/             # Support functions
 ├── main.py            # Entry point
-├── requirements.txt   # Dipendenze Python
+├── requirements.txt   # Python dependencies
 └── README.md
 ```
 ---
 ## 🛣️ Next steps
-- GUI support (Tkinter / PyQt / other)
+- GUI support
 
 - Secure export/import
 
