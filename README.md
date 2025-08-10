@@ -49,8 +49,10 @@ python main.py
 ```bash
 
 Localpwd/
-├── src/              # App logic
-│   └── ...
+├── src/               # App logic
+│   └── localpwd
+        __init__.py
+        corelogic.py
 ├── data/              # Encrypted vault 
 ├── utils/             # Support functions
 ├── main.py            # Entry point
