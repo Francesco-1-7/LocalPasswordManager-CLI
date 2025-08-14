@@ -35,26 +35,62 @@ def rimuovipassword():
             with open("passwords.json", "w", encoding="utf-8") as file:
                 json.dump(dati, file, indent=4, ensure_ascii=False)
 
-            print(f"Password per il sito '{rimossa.get('sito','')}")
+            print(f"Password per il sito '{rimossa.get('sito','')} rimossa con successo")
+            return
         else:
             print("Indice non valido")
     except ValueError:
         print("Devi inserire un numero valido")
 
+def visualizzapassword():
+    print("Queste sono tutte le tue password: ")
+    with open ("passwords.json", "r", encoding="utf-8") as file:
+        dati=json.load(file)
+    print(dati)
+
+    '''
+    ---Test def visualizzapassword metodo 2---
+    for entry in dati:
+    print(f"Sito: {entry['sito']}, Username: {entry['username']}, Password: {entry['password']}")
+    '''
     
+def uscitaprogramma():
+    while True:
+        exit=input("Inserisce la lettera ('e') per uscire dal programma -> ")
+        if exit=="e":
+            break
+        else:
+            print("Comando non valido, riprova ad inserire la lettera ('e') oppure digita ('b') per tornare indietro al menù principale -> ")
+            scelta=input("Inserisci lettera -> ")
+            if scelta == "e":
+                break
+            else:
+                if scelta == "b":
+                    menu()
+'''
+--- test def uscitaprogramma metodo 2 ---
+def uscitaprogramma():
+    conferma = input("Digita 'e' per uscire o 'b' per tornare al menu: ").strip().lower()
+    if conferma == "e":
+        exit()
+'''
+
 def menu():
     while True:
         print("\n===Localpwd Password Manager===")
         
-        print("1. Aggiungi una nuova password")
-        print("2. Visualizza le password salvate")
-        print("3. Esci da Localpwd")
-        scelta=input("Seleziona un'opzione (1-3): ").strip()
+        print("1. Aggiungi password")
+        print("2. Rimuovi password")
+        print("3. Visualizza passwords")
+        print("4. Esci dal programma")
+        scelta=input("Seleziona un'opzione (1-4): ").strip()
         if scelta == "1":
             aggiungipassword()
-        if scelta == "2":
+        elif scelta == "2":
             rimuovipassword()
-        if scelta == "3":
+        elif scelta == "3":
             visualizzapassword()
-        if scelta == "4":
+        elif scelta == "4":
             uscitaprogramma()
+        else:
+            print("Opzione non valida.")
