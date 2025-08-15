@@ -1,4 +1,17 @@
+import os
 import json
+
+BASE_DIR = os.path.dirname(
+          os.path.abspath(
+              os.path.join(os.path.dirname(__file__), "../../")
+          )
+)
+
+PASSWORDS_FILE = os.path.join(BASE_DIR, "passwords.json")
+
+if not os.path.exists(PASSWORDS_FILE):
+    with open(PASSWORDS_FILE, "w", encoding="utf-8") as file:
+        json.dump([], file)
 
 def aggiungipassword():
     with open("passwords.json", "r", encoding="utf-8") as file:
