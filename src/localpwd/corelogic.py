@@ -13,6 +13,17 @@ if not os.path.exists(PASSWORDS_FILE):
     with open(PASSWORDS_FILE, "w", encoding="utf-8") as file:
         json.dump([], file)
 
+def carica_dati():
+    try:
+        with open(PASSWORDS_FILE, "r", encoding="utf-8") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+    
+def salva_dati(dati):
+    with open (PASSWORDS_FILE, "w", encoding="utf-8") as file:
+        json.dump(dati, file, indent=4, ensure_ascii=False)
+
 def aggiungipassword():
     with open("passwords.json", "r", encoding="utf-8") as file:
         dati=json.load(file)
