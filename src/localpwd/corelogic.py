@@ -25,8 +25,7 @@ def salva_dati(dati):
         json.dump(dati, file, indent=4, ensure_ascii=False)
 
 def aggiungipassword():
-    with open("passwords.json", "r", encoding="utf-8") as file:
-        dati=json.load(file)
+    dati=carica_dati()
         
     sito=input("Inserisci il nome del sito: ")
     username=input("Inserisci username/email da salvare: ")
@@ -38,33 +37,26 @@ def aggiungipassword():
         "password": password
     })
 
-    with open("passwords.json", "w", encoding="utf-8") as file:
-        json.dump(dati, file, indent=4, ensure_ascii=False)
-
+    salva_dati(dati)
     print("Password salvata con successo")
 
 def rimuovipassword():
-    with open("passwords.json", "r",encoding="utf-8") as file:
-        dati=json.load(file)
+    dati=carica_dati
     if not dati:
         print("Non ci sono password da rimuovere")
-    
-    print("\nPasswords salvate: ")
-    for i, entry in enumerate(dati):
-        print(f"{i}: Sito:{entry.get('sito', '')}, username:{entry.get('username', '')}")
-    try:
-        indice=int(input("Inserisci il numero della password da eliminare (lista parte da 0): "))
-        if 0 <= indice < len(dati):
-            rimossa=dati.pop(indice)
-            with open("passwords.json", "w", encoding="utf-8") as file:
-                json.dump(dati, file, indent=4, ensure_ascii=False)
 
-            print(f"Password per il sito '{rimossa.get('sito','')} rimossa con successo")
+    print("\nPasswords salvate: ")
+    for i, entry in enumerate(dati, start=1):
+        print(f"{i}. Sito:{entry.get('sito', 'non presente')}, username:{entry.get('username', 'non presente')}")
+
+        scelta=int(input("Inserisci il numero della password da eliminare (lista parte da 0): "))
+        if scelta < 1 or scelta > len(dati):
+            print("Numero inserito non valido")
             return
-        else:
-            print("Indice non valido")
-    except ValueError:
-        print("Devi inserire un numero valido")
+        password_rimossa=dati.pop(scelta - 1)
+        salva_dati(dati)
+        print(f"Password per il sito '{password_rimossa.get('sito','')} rimossa con successo")
+        return
 
 def visualizzapassword():
     print("Queste sono tutte le tue password: ")
