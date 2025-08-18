@@ -61,13 +61,9 @@ def rimuovipassword():
 def visualizzapassword():
     print("Queste sono tutte le tue password: ")
     dati=carica_dati()
-    print(dati)
+    for i, entry in enumerate(dati, start=1):
+        print(f"{i}. {entry}")
 
-    '''
-    ---Test def visualizzapassword metodo 2---
-    for entry in dati:
-    print(f"Sito: {entry['sito']}, Username: {entry['username']}, Password: {entry['password']}")
-    '''
     
 def uscitaprogramma():
     while True:
@@ -82,13 +78,6 @@ def uscitaprogramma():
             else:
                 if scelta == "b":
                     menu()
-'''
---- test def uscitaprogramma metodo 2 ---
-def uscitaprogramma():
-    conferma = input("Digita 'e' per uscire o 'b' per tornare al menu: ").strip().lower()
-    if conferma == "e":
-        exit()
-'''
 
 def menu():
     while True:
