@@ -60,8 +60,7 @@ def rimuovipassword():
 
 def visualizzapassword():
     print("Queste sono tutte le tue password: ")
-    with open ("passwords.json", "r", encoding="utf-8") as file:
-        dati=json.load(file)
+    dati=carica_dati()
     print(dati)
 
     '''
