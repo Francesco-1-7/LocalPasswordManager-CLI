@@ -41,22 +41,23 @@ def aggiungipassword():
     print("Password salvata con successo")
 
 def rimuovipassword():
-    dati=carica_dati
+    dati=carica_dati()
     if not dati:
         print("Non ci sono password da rimuovere")
+        return
 
     print("\nPasswords salvate: ")
     for i, entry in enumerate(dati, start=1):
         print(f"{i}. Sito:{entry.get('sito', 'non presente')}, username:{entry.get('username', 'non presente')}")
 
-        scelta=int(input("Inserisci il numero della password da eliminare (lista parte da 0): "))
-        if scelta < 1 or scelta > len(dati):
-            print("Numero inserito non valido")
-            return
-        password_rimossa=dati.pop(scelta - 1)
-        salva_dati(dati)
-        print(f"Password per il sito '{password_rimossa.get('sito','')} rimossa con successo")
+    scelta=int(input("Inserisci il numero della password da eliminare: "))
+    if scelta < 1 or scelta > len(dati):
+        print("Numero inserito non valido")
         return
+    password_rimossa=dati.pop(scelta - 1)
+    salva_dati(dati)
+    print(f"Password per il sito '{password_rimossa.get('sito','')} rimossa con successo")
+    return
 
 def visualizzapassword():
     print("Queste sono tutte le tue password: ")
@@ -67,17 +68,13 @@ def visualizzapassword():
     
 def uscitaprogramma():
     while True:
-        exit=input("Inserisce la lettera ('e') per uscire dal programma -> ")
-        if exit=="e":
-            break
+        scelta=input("Inserisce la lettera ('e') per uscire dal programma o la lettera ('b') per tornare al menù -> ")
+        if scelta=="e":
+            exit(0)
+        elif scelta=="b":
+                return
         else:
-            print("Comando non valido, riprova ad inserire la lettera ('e') oppure digita ('b') per tornare indietro al menù principale -> ")
-            scelta=input("Inserisci lettera -> ")
-            if scelta == "e":
-                break
-            else:
-                if scelta == "b":
-                    menu()
+            print("Comando non valido, riprovare.")        
 
 def menu():
     while True:
