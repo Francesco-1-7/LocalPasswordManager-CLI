@@ -28,7 +28,7 @@ def verifica_master():
 
     with open (MASTER_FILE, "r") as file:
         dati=json.load(file)
-    hash_salvato=dati("hash")
+        hash_salvato=dati["hash"]
 
     for _ in range (3):
         master=getpass.getpass("Inserisci la master password: ")
