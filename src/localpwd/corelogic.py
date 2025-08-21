@@ -1,9 +1,11 @@
 import os
 import json
+from .auth import verifica_master
+
 
 BASE_DIR = os.path.dirname(
           os.path.abspath(
-              os.path.join(os.path.dirname(__file__), "../../")
+              os.path.join(os.path.dirname(__file__), "../")
           )
 )
 
@@ -77,6 +79,9 @@ def uscitaprogramma():
             print("Comando non valido, riprovare.")        
 
 def menu():
+
+    verifica_master()
+
     while True:
         print("\n===Localpwd Password Manager===")
         
