@@ -1,47 +1,49 @@
 import os
 import json
 from .auth import verifica_master
+from .crypt import derive_key, encrypt_password, decrypt_password
 
-
-BASE_DIR = os.path.dirname(
-          os.path.abspath(
-              os.path.join(os.path.dirname(__file__), "../")
-          )
-)
-
+BASE_DIR = BASE_DIR = os.path.dirname(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 PASSWORDS_FILE = os.path.join(BASE_DIR, "passwords.json")
 
 if not os.path.exists(PASSWORDS_FILE):
     with open(PASSWORDS_FILE, "w", encoding="utf-8") as file:
         json.dump([], file)
 
+#Funzione per caricare i dati
 def carica_dati():
     try:
         with open(PASSWORDS_FILE, "r", encoding="utf-8") as file:
             return json.load(file)
     except FileNotFoundError:
         return []
-    
+
+# Funzione per salvare dati
 def salva_dati(dati):
     with open (PASSWORDS_FILE, "w", encoding="utf-8") as file:
         json.dump(dati, file, indent=4, ensure_ascii=False)
 
-def aggiungipassword():
+# Aggiunge password cifrata
+def aggiungipassword(master):
     dati=carica_dati()
         
     sito=input("Inserisci il nome del sito: ")
     username=input("Inserisci username/email da salvare: ")
     password=input("Inserisci la password da salvare: ")
 
+    chiave=derive_key(master)
+    password_cifrata=encrypt_password(password, chiave)
+
     dati.append({
         "sito": sito,
         "username": username,
-        "password": password
+        "password": password_cifrata
     })
 
     salva_dati(dati)
     print("Password salvata con successo")
 
+# Rimuove password
 def rimuovipassword():
     dati=carica_dati()
     if not dati:
@@ -61,11 +63,21 @@ def rimuovipassword():
     print(f"Password per il sito '{password_rimossa.get('sito','')} rimossa con successo")
     return
 
-def visualizzapassword():
-    print("Queste sono tutte le tue password: ")
-    dati=carica_dati()
+# Visualizza password decifrate
+def visualizzapassword(master):
+    dati = carica_dati()
+    if not dati:
+        print("Non ci sono password salvate")
+        return
+
+    chiave = derive_key(master)
+    print("Queste sono tutte le tue password:")
     for i, entry in enumerate(dati, start=1):
-        print(f"{i}. {entry}")
+        try:
+            password_decifrata = decrypt_password(entry["password"], chiave)
+        except Exception:
+            password_decifrata = "<Errore decifratura>"
+        print(f"{i}. Sito: {entry['sito']}, Username: {entry['username']}, Password: {password_decifrata}")
 
     
 def uscitaprogramma():
@@ -78,9 +90,10 @@ def uscitaprogramma():
         else:
             print("Comando non valido, riprovare.")        
 
+# Menu principale
 def menu():
 
-    verifica_master()
+    master=verifica_master()
 
     while True:
         print("\n===Localpwd Password Manager===")
@@ -91,11 +104,11 @@ def menu():
         print("4. Esci dal programma")
         scelta=input("Seleziona un'opzione (1-4): ").strip()
         if scelta == "1":
-            aggiungipassword()
+            aggiungipassword(master)
         elif scelta == "2":
             rimuovipassword()
         elif scelta == "3":
-            visualizzapassword()
+            visualizzapassword(master)
         elif scelta == "4":
             uscitaprogramma()
         else:
