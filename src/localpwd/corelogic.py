@@ -1,9 +1,9 @@
 import os
 import json
 from .auth import verifica_master
-from .crypt import derive_key, encrypt_password, decrypt_password
+from .crypt import encrypt_password, decrypt_password
 
-BASE_DIR = BASE_DIR = os.path.dirname(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+BASE_DIR = os.path.dirname(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 PASSWORDS_FILE = os.path.join(BASE_DIR, "passwords.json")
 
 if not os.path.exists(PASSWORDS_FILE):
@@ -31,8 +31,8 @@ def aggiungipassword(master):
     username=input("Inserisci username/email da salvare: ")
     password=input("Inserisci la password da salvare: ")
 
-    chiave=derive_key(master)
-    password_cifrata=encrypt_password(password, chiave)
+    chiave = master
+    password_cifrata = encrypt_password(password, chiave)
 
     dati.append({
         "sito": sito,
@@ -54,14 +54,18 @@ def rimuovipassword():
     for i, entry in enumerate(dati, start=1):
         print(f"{i}. Sito:{entry.get('sito', 'non presente')}, username:{entry.get('username', 'non presente')}")
 
-    scelta=int(input("Inserisci il numero della password da eliminare: "))
-    if scelta < 1 or scelta > len(dati):
-        print("Numero inserito non valido")
+    try:
+        scelta=int(input("Inserisci il numero della password da eliminare: "))
+        if scelta < 1 or scelta > len(dati):
+            print("Numero inserito non valido")
+            return
+    except ValueError:
+        print("Inserisci un numero valido")
         return
+        
     password_rimossa=dati.pop(scelta - 1)
     salva_dati(dati)
-    print(f"Password per il sito '{password_rimossa.get('sito','')} rimossa con successo")
-    return
+    print(f"Password per il sito '{password_rimossa.get('sito','')}' rimossa con successo")
 
 # Visualizza password decifrate
 def visualizzapassword(master):
@@ -70,7 +74,7 @@ def visualizzapassword(master):
         print("Non ci sono password salvate")
         return
 
-    chiave = derive_key(master)
+    chiave = master
     print("Queste sono tutte le tue password:")
     for i, entry in enumerate(dati, start=1):
         try:
