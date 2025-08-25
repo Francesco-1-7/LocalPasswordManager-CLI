@@ -41,7 +41,6 @@ __pycache__/
 *.pyd
 .Python
 *.so
-.Python
 
 # Virtual Environment
 venv/
@@ -51,6 +50,20 @@ ENV/
 # IDE
 .vscode/
 .idea/
+
+# Sensitive files
+Master.json
+password.json
+secrets.json
+config.json
+*.key
+*.pem
+.env
+
+# General sensitive patterns
+*password*
+*secret*
+*config*.json
 
 # OS
 .DS_Store
