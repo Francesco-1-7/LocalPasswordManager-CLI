@@ -1,12 +1,11 @@
-# Accesso al corelogic
-
+# Corelogic access
 import sys
 import os
 
-# Aggiunge la cartella "src" al path dei moduli
+# add SRC folder to path
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
-# Importa la funzione menu dal tuo modulo
+# import menu func
 from localpwd.corelogic import menu
 
 if __name__ == "__main__":
