@@ -53,8 +53,9 @@ Localpwd/
 │   └── localpwd
         __init__.py
         corelogic.py
-├── data/              # Encrypted vault 
-├── utils/             # Support functions
+        crypt.py
+        auth.py 
+├── License            
 ├── main.py            # Entry point
 ├── requirements.txt   # Python dependencies
 └── README.md
