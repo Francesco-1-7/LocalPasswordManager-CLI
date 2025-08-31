@@ -37,6 +37,19 @@ pip install -r requirements.txt
 python main.py
 ```
 ---
+## Run as Executable (Windows)
+
+If you don't want to install Python, you can use the precompiled executable.
+
+1. Download the latest `.exe` file from the [Releases](https://github.com/Francesco-1-7/Localpwd/releases) page.
+2. Place it in any folder on your computer.
+3. Run it by double-clicking
+   
+or from the terminal:
+```bash
+.\localpwd.exe
+```
+
 ## 🔐 Security
 *Passwords are stored encrypted locally*
 
